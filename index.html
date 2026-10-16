@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cash-Flow | Salary & Expense Tracker</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Chart.js + jsPDF via CDN (no frameworks) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Cash-Flow</h1>
+      <div class="toolbar">
+        <label for="currency" style="margin:0">Currency</label>
+        <select id="currency" aria-label="Currency">
+          <option value="INR">INR (₹)</option>
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="GBP">GBP (£)</option>
+        </select>
+        <button id="downloadBtn" type="button">Download Report</button>
+      </div>
+    </header>
+
+    <div id="alertBanner" class="alert" role="alert">
+      Critical: your remaining balance is below 10% of your salary.
+    </div>
+
+    <div class="stats">
+      <div class="stat"><small>Total Salary</small><strong id="salaryDisplay">0.00</strong></div>
+      <div class="stat"><small>Total Expenses</small><strong id="expensesDisplay">0.00</strong></div>
+      <div class="stat"><small>Remaining Balance</small><strong id="balance">0.00</strong></div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <form id="salaryForm" class="panel" novalidate>
+          <h2>Salary</h2>
+          <label for="salary">Total Salary</label>
+          <input id="salary" type="number" step="any" placeholder="e.g. 50000" />
+          <button type="submit">Set salary</button>
+          <div id="salaryError" class="error"></div>
+        </form>
+
+        <form id="expenseForm" class="panel" style="margin-top:16px" novalidate>
+          <h2>Add expense</h2>
+          <label for="expName">Expense Name</label>
+          <input id="expName" type="text" placeholder="e.g. Groceries" />
+          <label for="expAmount">Expense Amount</label>
+          <input id="expAmount" type="number" step="any" placeholder="e.g. 1200" />
+          <button type="submit">Add expense</button>
+          <div id="expenseError" class="error"></div>
+        </form>
+      </div>
+
+      <div>
+        <div class="panel">
+          <h2>Expenses</h2>
+          <ul id="expenseList"></ul>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <h2>Remaining vs. Expenses</h2>
+          <div class="chart-box"><canvas id="pieChart"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
